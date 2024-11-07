@@ -50,11 +50,10 @@ FROM ros_base
 COPY --from=build /zenoh_ros_ws/src /zenoh_ros_ws/src
 COPY --from=build /zenoh_ros_ws/install /zenoh_ros_ws/install
 
-RUN cat <<EOF >> /root/.bashrc
-source /zenoh_ros_ws/install/setup.bash
-export RMW_IMPLEMENTATION=rmw_zenoh_cpp
-export RUST_LOG=info
-EOF
+RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash && \
+source /zenoh_ros_ws/install/setup.bash && \
+export RMW_IMPLEMENTATION=rmw_zenoh_cpp && \
+export RUST_LOG=info \n" >> /root/.bashrc
 
 EXPOSE 7447/tcp
 EXPOSE 7447/udp
